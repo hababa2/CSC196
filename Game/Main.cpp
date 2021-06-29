@@ -1,16 +1,32 @@
-#include "helper.h"
-#include "dynamic.h"
+#include "core.h"
 
 #include <iostream>
 
+#define HEIGHT 600
+#define WIDTH 800
+
+bool Update(float dt) 
+{ 
+	return false; 
+}
+
+void Draw(Core::Graphics& graphics) 
+{ 
+	for (int i = 0; i < 100; i++)
+	{
+		graphics.SetColor(RGB(rand() % CHAR_MAX, rand() % CHAR_MAX, rand() % CHAR_MAX));
+		graphics.DrawLine(static_cast<float>(rand() % WIDTH), static_cast<float>(rand() % HEIGHT),
+			static_cast<float>(rand() % WIDTH), static_cast<float>(rand() % HEIGHT));
+	}
+}
+
 int main()
 {
-	std::cout << nh::sqr(5.0f) << std::endl;
-	nh::point p1( 1.0f, 2.0f);
-	nh::point p2( 5.0f, 6.0f);
-	nh::point p3 = p1 + p2;
+	char name[] = "CSC196";
+	Core::Init(name, 800, 600);
+	Core::RegisterUpdateFn(Update);
+	Core::RegisterDrawFn(Draw);
 
-	std::cout << p3.x << ", " << p3.y << std::endl;
-
-	system("pause");
+	Core::GameLoop();
+	Core::Shutdown();
 }
