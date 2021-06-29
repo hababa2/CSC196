@@ -7,7 +7,7 @@
 
 bool Update(float dt) 
 { 
-	return false; 
+	return false;
 }
 
 void Draw(Core::Graphics& graphics) 
