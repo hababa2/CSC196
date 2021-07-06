@@ -22,11 +22,15 @@
     <ClInclude Include="Graphics\ParticleSystem.h" />
     <ClInclude Include="Graphics\Shape.h" />
     <ClInclude Include="Math\Color.h" />
+    <ClInclude Include="Math\Random.h" />
     <ClInclude Include="Math\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\ParticleSystem.cpp" />
     <ClCompile Include="Graphics\Shape.cpp" />
+    <ClCompile Include="Math\Color.cpp" />
+    <ClCompile Include="Math\Random.cpp" />
+    <ClCompile Include="Math\Vector2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

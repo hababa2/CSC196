@@ -1,11 +1,8 @@
 #include "ParticleSystem.h"
+#include "../Math/Random.h"
 
 namespace nh
 {
-	float random() { return rand() / (float)RAND_MAX; }
-
-	float random(float min, float max) { return min + (max - min) * random(); }
-
 	void ParticleSystem::Startup()
 	{
 		particles.resize(1000000);
@@ -55,7 +52,7 @@ namespace nh
 					particles[index].lifetime = lifetime;
 					particles[index].position = position;
 					particles[index].color = color;
-					particles[index].velocity = Vector2{ random(-1, 1), random(-1, 1) } * (speed * random());
+					particles[index].velocity = Vector2{ RandomRange(-1, 1), RandomRange(-1, 1) } * (speed * Random());
 					index++;
 					break;
 				}

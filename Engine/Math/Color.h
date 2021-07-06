@@ -22,5 +22,15 @@ namespace nh
 			BYTE blue = static_cast<BYTE>(b * 255);
 			return red | (green << 8) | (blue << 16);
 		}
+
+		static const Color white;
+		static const Color black;
+		static const Color red;
+		static const Color green;
+		static const Color blue;
+		static const Color cyan;
+		static const Color yellow;
+		static const Color magenta;
+		static const Color orange;
 	};
 }
