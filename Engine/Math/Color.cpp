@@ -2,7 +2,7 @@
 
 namespace nh
 {
-	const Color Color::white	{ 1.0f, 1.0f, 1.0f };
+	const Color Color::white	{ 1, 1, 1 };
 	const Color Color::black	{ 0.0f, 0.0f, 0.0f };
 	const Color Color::red		{ 1.0f, 0.0f, 0.0f };
 	const Color Color::green	{ 0.0f, 1.0f, 0.0f };

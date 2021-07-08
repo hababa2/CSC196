@@ -12,6 +12,8 @@ namespace nh
 		Color(float r, float g, float b) : r{ r }, g{ g }, b{ b } {}
 		Color(DWORD rgb) : r{ (rgb & 0xFF) / 255.f }, g{ (rgb & 0xFF00) / 255.f }, b{ (rgb & 0xFF0000) / 255.f } {}
 
+		Color operator+ (const Color& c) const { return { r + c.r, g + c.g, b + c.b }; }
+		Color operator- (const Color& c) const { return { r - c.r, g - c.g, b - c.b }; }
 		Color operator* (float s) const { return { r * s, g * s, b * s }; }
 		operator DWORD() const { return ToRGB(); }
 
