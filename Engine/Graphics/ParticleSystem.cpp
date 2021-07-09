@@ -34,7 +34,7 @@ namespace nh
 			if (particle.isActive)
 			{
 				graphics.SetColor(particle.color);
-				graphics.DrawLine(particle.prevPosition.x, particle.prevPosition.y, particle.position.x, particle.position.y);
+				graphics.DrawLine(particle.position.x, particle.position.y, particle.prevPosition.x, particle.prevPosition.y);
 			}
 		}
 	}

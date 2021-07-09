@@ -15,6 +15,12 @@
     <Filter Include="Source\Graphics">
       <UniqueIdentifier>{e2494d9a-0282-40c8-a1b4-6a01e0c7017c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Base">
+      <UniqueIdentifier>{5579e2dd-686c-48b9-a147-d69dcb8dc84d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Audio">
+      <UniqueIdentifier>{52b2e09e-036c-46a6-9ce3-939cfaf4d220}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math\Vector2.h">
@@ -38,6 +44,12 @@
     <ClInclude Include="Math\Transform.h">
       <Filter>Source\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Base\System.h">
+      <Filter>Source\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\Shape.cpp">
@@ -54,6 +66,9 @@
     </ClCompile>
     <ClCompile Include="Math\Vector2.cpp">
       <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
