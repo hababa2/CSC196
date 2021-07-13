@@ -22,6 +22,7 @@ float speed = 200.0f;
 float time = 0.0f;
 float deltaTime;
 float gameTime = 0;
+bool released = true;
 
 nh::Engine engine;
 
@@ -34,15 +35,23 @@ bool Update(float dt)
 
 	if (Core::Input::IsPressed(Core::Input::BUTTON_LEFT))
 	{
-		int x, y;
-		Core::Input::GetMousePos(x, y);
-		psPostiton.x = static_cast<float>(x);
-		psPostiton.y = static_cast<float>(y);
-		
-		std::vector<nh::Color> colors{ nh::Color::white, nh::Color::red, nh::Color::blue };
-		engine.Get<nh::ParticleSystem>()->Create(psPostiton, 30, 1.0f, colors[nh::RandomRangeInt(0, colors.size())], 50.0f);
-	}
+		if (released)
+		{
+			released = false;
+			int x, y;
+			Core::Input::GetMousePos(x, y);
+			psPostiton.x = static_cast<float>(x);
+			psPostiton.y = static_cast<float>(y);
 
+			std::vector<nh::Color> colors{ nh::Color::white, nh::Color::red, nh::Color::blue };
+			engine.Get<nh::ParticleSystem>()->Create(psPostiton, 30, 1.0f, colors[nh::RandomRangeInt(0, colors.size())], 50.0f);
+			engine.Get<nh::AudioSystem>()->PlayAudio("explosion");
+		}
+	}
+	else
+	{
+		released = true;
+	}
 
 	float thrust = 0;
 	transform.rotation += (Core::Input::IsPressed('D') - Core::Input::IsPressed('A')) * turnSpeed * dt;
@@ -80,6 +89,7 @@ int main()
 	Core::RegisterDrawFn(Draw);
 
 	engine.Startup();
+	engine.Get<nh::AudioSystem>()->AddAudio("explosion", "explosion.wav");
 
 	Core::GameLoop();
 	Core::Shutdown();

@@ -5,7 +5,7 @@ namespace nh
 	void Engine::Startup()
 	{
 		systems.push_back(std::make_unique<ParticleSystem>());
-		//Audio System
+		systems.push_back(std::make_unique<AudioSystem>());
 
 		for (auto& system : systems)
 		{

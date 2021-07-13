@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Graphics\ParticleSystem.h"
+#include "Audio\AudioSystem.h"
 
 #include <vector>
 #include <memory>
