@@ -20,6 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio\AudioSystem.h" />
+    <ClInclude Include="Base\Actor.h" />
+    <ClInclude Include="Base\Object.h" />
+    <ClInclude Include="Base\Scene.h" />
     <ClInclude Include="Base\System.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Graphics\ParticleSystem.h" />
@@ -32,6 +35,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\AudioSystem.cpp" />
+    <ClCompile Include="Base\Actor.cpp" />
+    <ClCompile Include="Base\Scene.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Graphics\ParticleSystem.cpp" />
     <ClCompile Include="Graphics\Shape.cpp" />
