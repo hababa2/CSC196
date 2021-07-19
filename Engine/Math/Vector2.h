@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <cmath>
 
 namespace nh
@@ -40,6 +41,8 @@ namespace nh
 		bool operator == (const Vector2& v) const	{ return x == v.x && y == v.y; }
 		bool operator != (const Vector2& v) const	{ return x != v.x || y != v.y; }
 
+		friend std::istream& operator>> (std::istream& stream, Vector2& v);
+
 		float Length() const;
 		float LengthSqr() const;
 
@@ -67,7 +70,7 @@ namespace nh
 
 	inline float Vector2::Angle() const			{ return atan2(y, x); }
 
-	inline float Vector2::Distance(const Vector2& v1, const Vector2& v2)	{ (v1 - v2).Length(); }
+	inline float Vector2::Distance(const Vector2& v1, const Vector2& v2)	{ return (v1 - v2).Length(); }
 	inline Vector2 Vector2::Rotate(const Vector2& v, float radians) 
 	{
 		return { v.x * cos(radians) - v.y * sin(radians), v.x * sin(radians) + v.y * cos(radians) };

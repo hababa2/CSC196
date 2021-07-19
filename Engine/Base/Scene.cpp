@@ -6,9 +6,22 @@ namespace nh
 {
 	void Scene::Update(float dt)
 	{
-		for (const auto& actor : actors)
+		for (auto it = actors.begin(); it != actors.end();)
 		{
-			actor->Update(dt);
+			(*it)->Update(dt);
+			auto it2 = it;
+			++it2;
+			for (; it2 != actors.end(); ++it2)
+			{
+				if (nh::Vector2::Distance((*it)->transform.position, (*it2)->transform.position) < 20)
+				{
+					it->get()->OnCollision(it2->get());
+					it2->get()->OnCollision(it->get());
+				}
+			}
+
+			if ((*it)->destroy) { it = actors.erase(it); }
+			else { ++it; }
 		}
 	}
 
@@ -24,5 +37,18 @@ namespace nh
 	{
 		actor->scene = this;
 		actors.push_back(std::move(actor));
+	}
+
+	void Scene::RemoveActor(Actor* actor)
+	{
+		for (auto it = actors.begin(); it != actors.end(); ++it)
+		{
+			if ((*it).get() == actor) { actors.erase(it); return; }
+		}
+	}
+
+	void Scene::RemoveAll()
+	{
+		actors.clear();
 	}
 }

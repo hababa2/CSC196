@@ -1,5 +1,7 @@
 #include "Shape.h"
 
+#include <fstream>
+
 namespace nh
 {
 	void Shape::Draw(Core::Graphics& graphics, const Vector2& position, float angle, float scale)
@@ -26,6 +28,28 @@ namespace nh
 
 			graphics.DrawLine(p1.x, p1.y, p2.x, p2.y);
 		}
+	}
+
+	bool Shape::Load(const std::string& filename)
+	{
+		std::ifstream stream(filename);
+		if (!stream.is_open()) { return false; }
+
+		stream >> color;
+
+		std::string line;
+		std::getline(stream, line);
+		size_t count = std::stoi(line);
+
+		for (size_t i = 0; i < count; i++)
+		{
+			Vector2 v;
+			stream >> v;
+
+			points.push_back(v);
+		}
+
+		return true;
 	}
 }
 

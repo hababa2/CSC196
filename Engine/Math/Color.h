@@ -2,6 +2,8 @@
 
 #include "core.h"
 
+#include <iostream>
+
 namespace nh
 {
 	struct Color
@@ -15,6 +17,9 @@ namespace nh
 		Color operator+ (const Color& c) const { return { r + c.r, g + c.g, b + c.b }; }
 		Color operator- (const Color& c) const { return { r - c.r, g - c.g, b - c.b }; }
 		Color operator* (float s) const { return { r * s, g * s, b * s }; }
+
+		friend std::istream& operator>> (std::istream& stream, Color& c);
+
 		operator DWORD() const { return ToRGB(); }
 
 		DWORD ToRGB() const

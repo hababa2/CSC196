@@ -10,6 +10,8 @@ public:
 
 	void Update(float dt) override;
 
+	virtual void OnCollision(Actor* actor);
+
 private:
 	float speed{ 200.0f };
 };

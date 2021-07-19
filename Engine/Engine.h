@@ -43,7 +43,7 @@ namespace nh
 	template<typename T>
 	inline T* Engine::Get()
 	{
-		for (auto& system : systems)
+		for (const auto& system : systems)
 		{
 			T* t = dynamic_cast<T*>(system.get());
 			if (t) { return t; }

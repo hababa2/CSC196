@@ -11,6 +11,8 @@ public:
 	void Update(float dt) override;
 
 private:
+	float fireTimer{ 0.0f };
+	float fireRate{ 0.2f };
 	float turnSpeed{ 3.0f };
 	float speed{ 200.0f };
 };
