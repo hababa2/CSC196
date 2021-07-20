@@ -6,6 +6,7 @@ namespace nh
 	{
 		systems.push_back(std::make_unique<ParticleSystem>());
 		systems.push_back(std::make_unique<AudioSystem>());
+		systems.push_back(std::make_unique<EventSystem>());
 
 		for (auto& system : systems)
 		{

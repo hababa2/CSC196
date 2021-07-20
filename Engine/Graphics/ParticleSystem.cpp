@@ -29,7 +29,7 @@ namespace nh
 
 	void ParticleSystem::Draw(Core::Graphics& graphics)
 	{
-		for (const Particle& particle : particles)
+		for (Particle& particle : particles)
 		{
 			if (particle.isActive)
 			{
@@ -41,21 +41,21 @@ namespace nh
 
 	void ParticleSystem::Create(const Vector2& position, size_t count, float lifetime, const Color& color, float speed)
 	{
-		size_t index = 0;
+		auto particle = particles.begin();
 		for (size_t i = 0; i < count; i++)
 		{
-			for (;index < particles.size(); index++)
+			particle = std::find_if(particle, particles.end(), Particle::IsNotActive);
+
+			if (particle != particles.end())
 			{
-				if (!particles[index].isActive)
-				{
-					particles[index].isActive = true;
-					particles[index].lifetime = lifetime;
-					particles[index].position = position;
-					particles[index].color = color;
-					particles[index].velocity = Vector2{ RandomRange(-1, 1), RandomRange(-1, 1) } * (speed * Random());
-					index++;
-					break;
-				}
+				particle->isActive = true;
+				particle->lifetime = lifetime;
+				particle->position = position;
+				particle->prevPosition = position;
+				particle->color = color;
+			
+				particle->velocity = Vector2{ RandomRange(-1, 1), RandomRange(-1, 1) } *(speed * Random());
+				++particle;
 			}
 		}
 	}

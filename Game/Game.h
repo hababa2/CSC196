@@ -25,6 +25,8 @@ private:
 	void UpdateTitle(float dt);
 	void UpdateStartLevel(float dt);
 	void UpdateGame(float dt);
+	void OnAddPoints(const nh::Event& e);
+	void OnPlayerDead(const nh::Event& e);
 
 public:
 	std::unique_ptr<nh::Scene> scene;

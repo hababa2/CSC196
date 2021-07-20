@@ -25,6 +25,7 @@
     <ClInclude Include="Base\Scene.h" />
     <ClInclude Include="Base\System.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="Framework\EventSystem.h" />
     <ClInclude Include="Graphics\ParticleSystem.h" />
     <ClInclude Include="Graphics\Shape.h" />
     <ClInclude Include="Math\Color.h" />
@@ -38,6 +39,7 @@
     <ClCompile Include="Base\Actor.cpp" />
     <ClCompile Include="Base\Scene.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Framework\EventSystem.cpp" />
     <ClCompile Include="Graphics\ParticleSystem.cpp" />
     <ClCompile Include="Graphics\Shape.cpp" />
     <ClCompile Include="Math\Color.cpp" />

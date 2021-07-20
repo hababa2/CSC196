@@ -15,6 +15,8 @@ void Game::Initialize()
 
 	state = eState::Title;
 	//stateFn = &Game::UpdateTitle;
+	engine->Get<nh::EventSystem>()->Subscribe("AddPoints", std::bind(&Game::OnAddPoints, this, std::placeholders::_1));
+	engine->Get<nh::EventSystem>()->Subscribe("PlayerDead", std::bind(&Game::OnPlayerDead, this, std::placeholders::_1));
 }
 
 void Game::Shutdown()
@@ -47,9 +49,9 @@ void Game::Update(float dt)
 		enemy->Load("enemy.txt");
 
 		scene->AddActor(std::make_unique<Player>(nh::Transform{ { 400, 300 }, 0.0f, 3.0f }, player, 200.0f));
-		for (size_t i = 0; i < 100; i++)
+		for (size_t i = 0; i < 10; i++)
 		{
-			scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { 400, 300 }, nh::RandomRange(0, nh::TwoPi), 2.0f }, enemy, 200.0f));
+			scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { 600, 500 }, nh::RandomRange(0, nh::TwoPi), 2.0f }, enemy, 200.0f));
 		}
 		state = eState::Game;
 	}	break;
@@ -82,6 +84,8 @@ void Game::Draw(Core::Graphics& graphics)
 	case Game::eState::Game:
 		break;
 	case Game::eState::GameOver:
+		graphics.SetColor(nh::Color::red);
+		graphics.DrawString(380, 300 + static_cast<int>(std::sin(stateTimer * 3.0f) * 4.0f), "GAME OVER");
 		break;
 	default:
 		break;
@@ -119,4 +123,16 @@ void Game::UpdateStartLevel(float dt)
 void Game::UpdateGame(float dt)
 {
 
+}
+
+void Game::OnAddPoints(const nh::Event& e)
+{
+	score += 100;
+}
+
+void Game::OnPlayerDead(const nh::Event& e)
+{
+	lives -= 1;
+
+	state = eState::GameOver;
 }

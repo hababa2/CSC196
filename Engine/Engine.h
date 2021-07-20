@@ -3,6 +3,7 @@
 //Systems
 #include "Graphics\ParticleSystem.h"
 #include "Audio\AudioSystem.h"
+#include "Framework\EventSystem.h"
 
 //Math
 #include "Math\Vector2.h"
@@ -22,6 +23,7 @@
 
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 namespace nh
 {

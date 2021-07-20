@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "Projectile.h"
+#include "Enemy.h"
 #include "Engine.h"
 #include "Math\MathUtils.h"
 #include <memory>
@@ -30,4 +31,16 @@ void Player::Update(float dt)
 	}
 
 	scene->engine->Get<nh::ParticleSystem>()->Create(transform.position, 3, 2.0f, nh::Color::red, 50.0f);
+}
+
+void Player::OnCollision(Actor* actor)
+{
+	if (dynamic_cast<Enemy*>(actor))
+	{
+		destroy = true;
+
+		scene->engine->Get<nh::ParticleSystem>()->Create(transform.position, 200, 2.0f, nh::Color::red, 50.0f);
+		scene->engine->Get<nh::AudioSystem>()->PlayAudio("explosion");
+		scene->engine->Get<nh::EventSystem>()->Notify({ "PlayerDead" });
+	}
 }

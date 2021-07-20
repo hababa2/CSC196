@@ -9,6 +9,7 @@ public:
 	Player(const Actor& actor, float speed) : nh::Actor{ actor }, speed{ speed }{}
 
 	void Update(float dt) override;
+	virtual void OnCollision(Actor* actor);
 
 private:
 	float fireTimer{ 0.0f };

@@ -21,5 +21,6 @@ void Enemy::OnCollision(Actor* actor)
 
 		scene->engine->Get<nh::ParticleSystem>()->Create(transform.position, 200, 2.0f, nh::Color::red, 50.0f);
 		scene->engine->Get<nh::AudioSystem>()->PlayAudio("explosion");
+		scene->engine->Get<nh::EventSystem>()->Notify({ "AddPoints" });
 	}
 }
