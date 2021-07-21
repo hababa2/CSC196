@@ -29,4 +29,16 @@ namespace nh
 			system->Update(dt);
 		}
 	}
+
+	void Engine::Draw(Core::Graphics& graphics)
+	{
+		for (auto& system : systems)
+		{
+			GraphicsSystem* g = dynamic_cast<GraphicsSystem*>(system.get());
+			if (g)
+			{
+				g->Draw(graphics);
+			}
+		}
+	}
 }

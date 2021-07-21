@@ -23,5 +23,3 @@ namespace nh
 		std::map<std::string, FMOD::Sound*> sounds;
 	};
 }
-
-extern nh::AudioSystem audioSystem;

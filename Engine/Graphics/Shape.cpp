@@ -1,4 +1,5 @@
 #include "Shape.h"
+#include "Math\MathUtils.h"
 
 #include <fstream>
 
@@ -49,7 +50,17 @@ namespace nh
 			points.push_back(v);
 		}
 
+		ComputeRadius();
+
 		return true;
+	}
+
+	void Shape::ComputeRadius()
+	{
+		for (auto& point : points)
+		{
+			radius = nh::Max(point.Length(), radius);
+		}
 	}
 }
 

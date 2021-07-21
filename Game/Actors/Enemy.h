@@ -13,5 +13,7 @@ public:
 	virtual void OnCollision(Actor* actor);
 
 private:
+	float fireTimer{ 0.0f };
+	float fireRate{ 1.0f };
 	float speed{ 200.0f };
 };

@@ -40,6 +40,8 @@
     <ClInclude Include="Actors\Projectile.h">
       <Filter>Source\Actors</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="Game.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

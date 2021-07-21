@@ -16,7 +16,7 @@ void Game::Initialize()
 	state = eState::Title;
 	//stateFn = &Game::UpdateTitle;
 	engine->Get<nh::EventSystem>()->Subscribe("AddPoints", std::bind(&Game::OnAddPoints, this, std::placeholders::_1));
-	engine->Get<nh::EventSystem>()->Subscribe("PlayerDead", std::bind(&Game::OnPlayerDead, this, std::placeholders::_1));
+	engine->Get<nh::EventSystem>()->Subscribe("PlayerHit", std::bind(&Game::OnPlayerHit, this, std::placeholders::_1));
 }
 
 void Game::Shutdown()
@@ -43,6 +43,7 @@ void Game::Update(float dt)
 		break;
 	case Game::eState::StartLevel:
 	{
+		scene->RemoveAll();
 		std::shared_ptr<nh::Shape> player = std::make_shared<nh::Shape>();
 		player->Load("player.txt");
 		std::shared_ptr<nh::Shape> enemy = std::make_shared<nh::Shape>();
@@ -56,8 +57,10 @@ void Game::Update(float dt)
 		state = eState::Game;
 	}	break;
 	case Game::eState::Game:
+		if (iFrameCounter > 0) { iFrameCounter -= dt; }
 		break;
 	case Game::eState::GameOver:
+		if (Core::Input::IsPressed(VK_SPACE)) { state = eState::StartGame; }
 		break;
 	default:
 		break;
@@ -74,7 +77,6 @@ void Game::Draw(Core::Graphics& graphics)
 	case Game::eState::Title:
 		graphics.SetColor(nh::Color::blue);
 		graphics.DrawString(380, 300 + static_cast<int>(std::sin(stateTimer * 3.0f) * 4.0f), "MY GAME");
-
 		graphics.DrawString(340, 400, "PRESS SPACE TO START");
 		break;
 	case Game::eState::StartGame:
@@ -86,6 +88,7 @@ void Game::Draw(Core::Graphics& graphics)
 	case Game::eState::GameOver:
 		graphics.SetColor(nh::Color::red);
 		graphics.DrawString(380, 300 + static_cast<int>(std::sin(stateTimer * 3.0f) * 4.0f), "GAME OVER");
+		graphics.DrawString(340, 400, "PRESS SPACE TO RESTART");
 		break;
 	default:
 		break;
@@ -96,7 +99,7 @@ void Game::Draw(Core::Graphics& graphics)
 	graphics.DrawString(750, 20, std::to_string(lives).c_str());
 
 	scene->Draw(graphics);
-	engine->Get<nh::ParticleSystem>()->Draw(graphics);
+	engine->Draw(graphics);
 }
 
 void Game::UpdateTitle(float dt)
@@ -127,12 +130,19 @@ void Game::UpdateGame(float dt)
 
 void Game::OnAddPoints(const nh::Event& e)
 {
-	score += 100;
+	score += std::get<int>(e.data);
 }
 
-void Game::OnPlayerDead(const nh::Event& e)
+void Game::OnPlayerHit(const nh::Event& e)
 {
-	lives -= 1;
-
-	state = eState::GameOver;
+	if (iFrameCounter <= 0)
+	{
+		iFrameCounter = 0.5f;
+		if (--lives == 0)
+		{
+			state = eState::GameOver;
+			scene->GetActor<Player>()->destroy = true;
+			std::cout << std::get<std::string>(e.data) << std::endl;
+		}
+	}
 }

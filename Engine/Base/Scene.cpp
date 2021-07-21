@@ -2,17 +2,10 @@
 
 #include "Actor.h"
 
-#include <algorithm>
-
 namespace nh
 {
 	void Scene::Update(float dt)
 	{
-		//std::for_each(actors.begin(), actors.end(), [dt](auto& actor)
-		//{
-		//	actor->Update(dt);
-		//});
-
 		for (auto it = actors.begin(); it != actors.end();)
 		{
 			(*it)->Update(dt);
@@ -20,7 +13,8 @@ namespace nh
 			++it2;
 			for (; it2 != actors.end(); ++it2)
 			{
-				if ((!it->get()->destroy && !it2->get()->destroy) && nh::Vector2::Distance((*it)->transform.position, (*it2)->transform.position) < 20)
+				if ((!it->get()->destroy && !it2->get()->destroy) && 
+					nh::Vector2::Distance((*it)->transform.position, (*it2)->transform.position) < (it->get()->GetRadius() + it2->get()->GetRadius()))
 				{
 					it->get()->OnCollision(it2->get());
 					it2->get()->OnCollision(it->get());

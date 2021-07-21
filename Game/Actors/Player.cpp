@@ -26,8 +26,9 @@ void Player::Update(float dt)
 		nh::Transform t = transform;
 		t.scale = 0.5f;
 		t.rotation += nh::Pi;
-
-		scene->AddActor(std::make_unique<Projectile>(t, shape, 600.0f));
+		std::unique_ptr<Projectile> p = std::make_unique<Projectile>(t, shape, 600.0f);
+		p->tag = "Player";
+		scene->AddActor(std::move(p));
 	}
 
 	scene->engine->Get<nh::ParticleSystem>()->Create(transform.position, 3, 2.0f, nh::Color::red, 50.0f);
@@ -37,10 +38,11 @@ void Player::OnCollision(Actor* actor)
 {
 	if (dynamic_cast<Enemy*>(actor))
 	{
-		destroy = true;
-
 		scene->engine->Get<nh::ParticleSystem>()->Create(transform.position, 200, 2.0f, nh::Color::red, 50.0f);
 		scene->engine->Get<nh::AudioSystem>()->PlayAudio("explosion");
-		scene->engine->Get<nh::EventSystem>()->Notify({ "PlayerDead" });
+		nh::Event e;
+		e.name = "PlayerHit";
+		e.data = std::string("I'm dead");
+		scene->engine->Get<nh::EventSystem>()->Notify(e);
 	}
 }

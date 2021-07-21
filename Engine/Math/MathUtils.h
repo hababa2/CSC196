@@ -21,6 +21,24 @@ namespace nh
 	}
 
 	template<typename T>
+	inline T Max(T v1, T v2)
+	{
+		return v1 > v2 ? v1 : v2;
+	}
+
+	template<typename T>
+	inline T Min(T v1, T v2)
+	{
+		return v1 < v2 ? v1 : v2;
+	}
+
+	template<typename T>
+	inline T Abs(T v)
+	{
+		return v > 0 ? v : -v;
+	}
+
+	template<typename T>
 	inline T Clamp(T v, T min, T max)
 	{
 		return v < min ? min : v > max ? max : v;
