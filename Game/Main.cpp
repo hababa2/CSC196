@@ -21,6 +21,8 @@ void Draw(Core::Graphics& graphics)
 	game.Draw(graphics);
 }
 
+#include "Math\Matrix2.h"
+
 int main()
 {
 	char name[] = "CSC196";

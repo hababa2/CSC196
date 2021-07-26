@@ -18,6 +18,8 @@ void Player::Update(float dt)
 	transform.position.x = nh::Wrap(transform.position.x, 0.0f, 800.0f);
 	transform.position.y = nh::Wrap(transform.position.y, 0.0f, 600.0f);
 
+	transform.Update();
+
 	if (((fireTimer -= dt) <= 0) && Core::Input::IsPressed(VK_SPACE))
 	{
 		fireTimer = fireRate;
