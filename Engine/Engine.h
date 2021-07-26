@@ -4,6 +4,7 @@
 #include "Graphics\ParticleSystem.h"
 #include "Audio\AudioSystem.h"
 #include "Framework\EventSystem.h"
+#include "Framework\ResourceSystem.h"
 
 //Math
 #include "Math\Vector2.h"

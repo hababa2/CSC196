@@ -4,12 +4,14 @@
 #include "Math/Color.h"
 #include "Math/Transform.h"
 
+#include "Framework\ResourceSystem.h"
+
 #include <vector>
 #include <string>
 
 namespace nh
 {
-	class Shape
+	class Shape : public Resource
 	{
 	public:
 		Shape() {};
@@ -18,7 +20,7 @@ namespace nh
 		void Draw(Core::Graphics& graphics, const Vector2& position, float angle, float scale = 1.0f);
 		void Draw(Core::Graphics& graphics, const Transform& transform);
 
-		bool Load(const std::string& filename);
+		bool Load(const std::string& filename) override;
 
 	private:
 		void ComputeRadius();

@@ -68,6 +68,9 @@
     <ClInclude Include="Framework\EventSystem.h">
       <Filter>Source\Framework</Filter>
     </ClInclude>
+    <ClInclude Include="Framework\ResourceSystem.h">
+      <Filter>Source\Framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\Shape.cpp">

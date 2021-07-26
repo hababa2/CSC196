@@ -14,7 +14,7 @@ void Game::Initialize()
 	engine->Get<nh::AudioSystem>()->AddAudio("explosion", "explosion.wav");
 
 	state = eState::Title;
-	//stateFn = &Game::UpdateTitle;
+
 	engine->Get<nh::EventSystem>()->Subscribe("AddPoints", std::bind(&Game::OnAddPoints, this, std::placeholders::_1));
 	engine->Get<nh::EventSystem>()->Subscribe("PlayerHit", std::bind(&Game::OnPlayerHit, this, std::placeholders::_1));
 }
@@ -29,12 +29,10 @@ void Game::Update(float dt)
 {
 	stateTimer += dt;
 
-	//(this->*stateFn)(dt);
-
 	switch (state)
 	{
 	case Game::eState::Title:
-		if (Core::Input::IsPressed(VK_SPACE)) { state = eState::StartGame; }
+		UpdateTitle(dt);
 		break;
 	case Game::eState::StartGame:
 		score = 0;
@@ -42,22 +40,10 @@ void Game::Update(float dt)
 		state = eState::StartLevel;
 		break;
 	case Game::eState::StartLevel:
-	{
-		scene->RemoveAll();
-		std::shared_ptr<nh::Shape> player = std::make_shared<nh::Shape>();
-		player->Load("player.txt");
-		std::shared_ptr<nh::Shape> enemy = std::make_shared<nh::Shape>();
-		enemy->Load("enemy.txt");
-
-		scene->AddActor(std::make_unique<Player>(nh::Transform{ { 400, 300 }, 0.0f, 3.0f }, player, 200.0f));
-		for (size_t i = 0; i < 10; i++)
-		{
-			scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { 600, 500 }, nh::RandomRange(0, nh::TwoPi), 2.0f }, enemy, 200.0f));
-		}
-		state = eState::Game;
-	}	break;
+		UpdateStartLevel(dt);
+		break;
 	case Game::eState::Game:
-		if (iFrameCounter > 0) { iFrameCounter -= dt; }
+		UpdateGame(dt);
 		break;
 	case Game::eState::GameOver:
 		if (Core::Input::IsPressed(VK_SPACE)) { state = eState::StartGame; }
@@ -104,28 +90,26 @@ void Game::Draw(Core::Graphics& graphics)
 
 void Game::UpdateTitle(float dt)
 {
-	if (Core::Input::IsPressed(VK_SPACE)) { stateFn = &Game::UpdateStartLevel; }
+	if (Core::Input::IsPressed(VK_SPACE)) { state = eState::StartGame; }
 }
 
 void Game::UpdateStartLevel(float dt)
 {
-	std::shared_ptr<nh::Shape> player = std::make_shared<nh::Shape>();
-	player->Load("player.txt");
-	std::shared_ptr<nh::Shape> enemy = std::make_shared<nh::Shape>();
-	enemy->Load("enemy.txt");
+	scene->RemoveAll();
 
-	scene->AddActor(std::make_unique<Player>(nh::Transform{ { 400, 300 }, 0.0f, 3.0f }, player, 200.0f));
-	for (size_t i = 0; i < 100; i++)
+	scene->AddActor(std::make_unique<Player>(nh::Transform{ { 400, 300 }, 0.0f, 3.0f }, 
+		engine->Get<nh::ResourceSystem>()->get<nh::Shape>("player.txt"), 200.0f));
+	for (size_t i = 0; i < 10; i++)
 	{
-		scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { 400, 300 }, nh::RandomRange(0, nh::TwoPi), 2.0f }, enemy, 200.0f));
+		scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { 600, 500 }, nh::RandomRange(0, nh::TwoPi), 2.0f }, 
+			engine->Get<nh::ResourceSystem>()->get<nh::Shape>("enemy.txt"), 200.0f));
 	}
-
-	stateFn = &Game::UpdateGame;
+	state = eState::Game;
 }
 
 void Game::UpdateGame(float dt)
 {
-
+	if (iFrameCounter > 0) { iFrameCounter -= dt; }
 }
 
 void Game::OnAddPoints(const nh::Event& e)
