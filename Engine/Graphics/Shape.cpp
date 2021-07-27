@@ -24,10 +24,8 @@ namespace nh
 
 		for (size_t i = 0; i < points.size() - 1; i++)
 		{
-			//Vector2 p1 = transform.position + (Vector2::Rotate(points[i], transform.rotation) * transform.scale);
-			//Vector2 p2 = transform.position + (Vector2::Rotate(points[i + 1], transform.rotation) * transform.scale);
-			Vector2 p1 = transform.position + transform.matrix * points[i];
-			Vector2 p2 = transform.position + transform.matrix * points[i + 1];
+			Vector2 p1 = transform.matrix * points[i];
+			Vector2 p2 = transform.matrix * points[i + 1];
 
 			graphics.DrawLine(p1.x, p1.y, p2.x, p2.y);
 		}

@@ -8,7 +8,6 @@
 
 void Player::Update(float dt)
 {
-	Actor::Update(dt);
 
 	float thrust = 0;
 	transform.rotation += (Core::Input::IsPressed('D') - Core::Input::IsPressed('A')) * turnSpeed * dt;
@@ -18,7 +17,7 @@ void Player::Update(float dt)
 	transform.position.x = nh::Wrap(transform.position.x, 0.0f, 800.0f);
 	transform.position.y = nh::Wrap(transform.position.y, 0.0f, 600.0f);
 
-	transform.Update();
+	Actor::Update(dt);
 
 	if (((fireTimer -= dt) <= 0) && Core::Input::IsPressed(VK_SPACE))
 	{

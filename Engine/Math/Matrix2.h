@@ -10,7 +10,6 @@ namespace nh
 
 		Matrix22() : m{ 0.0f, 0.0f, 0.0f, 0.0f } {}
 		Matrix22(const Vector2& c1, const Vector2& c2) : m{ c1.x, c1.y, c2.x, c2.y } {}
-		Matrix22(float f) : m{ f, 0.0f, 0.0f, f } {}
 
 		void Scale(float s) { m[0][0] = s; m[1][1] = s; m[1][0] = 0.0f; m[0][1] = 0.0f; }
 		void Scale(float sx, float sy) { m[0][0] = sx; m[1][1] = sy; m[1][0] = 0.0f; m[0][1] = 0.0f; }

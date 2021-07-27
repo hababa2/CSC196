@@ -4,9 +4,17 @@
 
 namespace nh
 {
+	void Actor::Update(float dt)
+	{
+		transform.Update();
+	}
+
 	void Actor::Draw(Core::Graphics& graphics)
 	{
-		shape->Draw(graphics, transform);
+		if (shape)
+		{
+			shape->Draw(graphics, transform);
+		}
 	}
 
 	float Actor::GetRadius()

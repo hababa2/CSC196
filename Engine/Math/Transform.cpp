@@ -4,12 +4,15 @@ namespace nh
 {
 	void Transform::Update()
 	{
-		Matrix22 mxs;
+		Matrix33 mxs;
 		mxs.Scale(scale);
 
-		Matrix22 mxr;
+		Matrix33 mxr;
 		mxr.Rotate(rotation);
 
-		matrix = mxs * mxr;
+		Matrix33 mxt;
+		mxt.Translate(position);
+
+		matrix = mxs * mxr * mxt;
 	}
 }

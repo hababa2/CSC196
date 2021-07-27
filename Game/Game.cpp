@@ -99,17 +99,21 @@ void Game::UpdateStartLevel(float dt)
 
 	scene->AddActor(std::make_unique<Player>(nh::Transform{ { 400, 300 }, 0.0f, 3.0f }, 
 		engine->Get<nh::ResourceSystem>()->get<nh::Shape>("player.txt"), 200.0f));
+
 	for (size_t i = 0; i < 10; i++)
 	{
-		scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { 600, 500 }, nh::RandomRange(0, nh::TwoPi), 2.0f }, 
-			engine->Get<nh::ResourceSystem>()->get<nh::Shape>("enemy.txt"), 200.0f));
+		scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { nh::RandomRange(-100.0f, 900.0f), nh::RandomRange(-100.0f, 700.0f) },
+			nh::RandomRange(0.0f, nh::TwoPi), 5.0f },
+			engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid1.txt"), nh::RandomRange(10.0f, 100.0f)));
 	}
+
 	state = eState::Game;
 }
 
 void Game::UpdateGame(float dt)
 {
 	if (iFrameCounter > 0) { iFrameCounter -= dt; }
+
 }
 
 void Game::OnAddPoints(const nh::Event& e)
