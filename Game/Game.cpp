@@ -105,7 +105,7 @@ void Game::UpdateStartLevel(float dt)
 	{
 		scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { nh::RandomRange(-100.0f, 900.0f), nh::RandomRange(-100.0f, 700.0f) },
 			nh::RandomRange(0.0f, nh::TwoPi), 6.0f },
-			engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid1.txt"), nh::RandomRange(10.0f, 100.0f)));
+			engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid" + std::to_string(nh::RandomRangeInt(0, 2)) + ".txt"), nh::RandomRange(10.0f, 100.0f)));
 	}
 
 	state = eState::Game;
@@ -121,7 +121,7 @@ void Game::UpdateGame(float dt)
 
 		scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { nh::RandomRange(-100.0f, 900.0f), nh::RandomRange(-100.0f, 700.0f) },
 			nh::RandomRange(0.0f, nh::TwoPi), 6.0f },
-			engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid1.txt"), nh::RandomRange(10.0f, 100.0f)));
+			engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid" + std::to_string(nh::RandomRangeInt(0, 2)) + ".txt"), nh::RandomRange(10.0f, 100.0f)));
 	}
 }
 
@@ -159,7 +159,7 @@ void Game::OnEnemyHit(const nh::Event& e)
 		for (int i = 0; i < 2; ++i)
 		{
 			std::unique_ptr newEnemy = std::make_unique<Enemy>(t, 
-				engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid1.txt"), nh::RandomRange(30.0f, 100.0f));
+				engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid" + std::to_string(nh::RandomRangeInt(0, 2)) + ".txt"), nh::RandomRange(30.0f, 100.0f));
 			newEnemy->size = enemy->size;
 			scene->AddActor(std::move(newEnemy));
 			t.rotation = nh::RandomRange(0.0f, nh::TwoPi);
