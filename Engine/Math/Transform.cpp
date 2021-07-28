@@ -15,4 +15,21 @@ namespace nh
 
 		matrix = mxs * mxr * mxt;
 	}
+
+	void Transform::Update(const Matrix33& mx)
+	{
+		Matrix33 mxs;
+		mxs.Scale(lScale);
+
+		Matrix33 mxr;
+		mxr.Rotate(lRotation);
+
+		Matrix33 mxt;
+		mxt.Translate(lPosition);
+
+		matrix = mxs * mxr * mxt * mx;
+
+		position = matrix.GetTranslation();
+		rotation = matrix.GetRotation();
+	}
 }

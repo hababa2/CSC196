@@ -4,6 +4,7 @@
 #include "Math\Transform.h"
 #include "core.h"
 #include <memory>
+#include <vector>
 
 namespace nh
 {
@@ -14,11 +15,14 @@ namespace nh
 	{
 	public:
 		Actor(const Transform& transform, std::shared_ptr<Shape> shape = {}) : transform{ transform }, shape{ shape } {}
+		Actor() {}
 
 		virtual void Update(float dt);
 		virtual void Draw(Core::Graphics& graphics);
 
 		virtual void OnCollision(Actor* actor) {}
+
+		void AddChild(std::unique_ptr<Actor> a);
 
 		float GetRadius();
 
@@ -29,5 +33,8 @@ namespace nh
 		Transform transform;
 		std::shared_ptr<Shape> shape;
 		Scene* scene{ nullptr };
+
+		Actor* parent{ nullptr };
+		std::vector<std::unique_ptr<Actor>> children;
 	};
 }

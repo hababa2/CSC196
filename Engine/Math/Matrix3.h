@@ -61,7 +61,7 @@ namespace nh
 
 	inline float Matrix33::GetRotation() const
 	{
-		return std::atan2(m[0][0], m[1][0]);
+		return std::atan2(m[1][0], m[0][0]);
 	}
 
 	inline void Matrix33::Translate(const Vector2& v)
@@ -86,6 +86,7 @@ namespace nh
 	inline Matrix33 Matrix33::operator*(const Matrix33& mx) const
 	{
 		Matrix33 r;
+
 		r.m[0][0] = m[0][0] * mx.m[0][0] + m[1][0] * mx.m[0][1] + m[2][0] * mx.m[0][2];
 		r.m[1][0] = m[0][0] * mx.m[1][0] + m[1][0] * mx.m[1][1] + m[2][0] * mx.m[1][2];
 		r.m[2][0] = m[0][0] * mx.m[2][0] + m[1][0] * mx.m[2][1] + m[2][0] * mx.m[2][2];
@@ -104,6 +105,7 @@ namespace nh
 	inline Vector2 Matrix33::operator*(const Vector2& v) const
 	{
 		Vector2 r;
+
 		r[0] = v[0] * m[0][0] + v[1] * m[0][1] + m[0][2];
 		r[1] = v[0] * m[1][0] + v[1] * m[1][1] + m[1][2];
 

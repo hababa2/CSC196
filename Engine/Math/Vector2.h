@@ -10,6 +10,7 @@ namespace nh
 		float x, y;
 
 		Vector2() : x{ 0.0f }, y{ 0.0f }{}
+		Vector2(float f) : x{ f }, y{ f }{}
 		Vector2(float x, float y) : x{ x }, y{ y }{}
 		Vector2(int x, int y) : x{ static_cast<float>(x) }, y{ static_cast<float>(y) }{}
 

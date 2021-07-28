@@ -130,7 +130,6 @@ void Game::OnPlayerHit(const nh::Event& e)
 		{
 			state = eState::GameOver;
 			scene->GetActor<Player>()->destroy = true;
-			std::cout << std::get<std::string>(e.data) << std::endl;
 		}
 	}
 }

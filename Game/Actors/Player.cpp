@@ -6,9 +6,15 @@
 #include "Math\MathUtils.h"
 #include <memory>
 
+Player::Player(const nh::Transform& transform, std::shared_ptr<nh::Shape> shape, float speed) : nh::Actor{ transform, shape }, speed{ speed }
+{
+	std::unique_ptr locator = std::make_unique<Actor>();
+	locator->transform.lPosition = { 5.0f, 0.0f };
+	AddChild(std::move(locator));
+}
+
 void Player::Update(float dt)
 {
-
 	float thrust = 0;
 	transform.rotation += (Core::Input::IsPressed('D') - Core::Input::IsPressed('A')) * turnSpeed * dt;
 	thrust = (Core::Input::IsPressed('W') - Core::Input::IsPressed('S')) * speed;
@@ -22,9 +28,8 @@ void Player::Update(float dt)
 	if (((fireTimer -= dt) <= 0) && Core::Input::IsPressed(VK_SPACE))
 	{
 		fireTimer = fireRate;
-		nh::Transform t = transform;
-		t.scale = 0.5f;
-		std::unique_ptr<Projectile> p = std::make_unique<Projectile>(t, 
+		nh::Transform t = children[0]->transform;
+		std::unique_ptr<Projectile> p = std::make_unique<Projectile>(t,
 			scene->engine->Get<nh::ResourceSystem>()->get<nh::Shape>("player.txt"), 600.0f);
 		p->tag = "Player";
 		scene->AddActor(std::move(p));
@@ -41,7 +46,6 @@ void Player::OnCollision(Actor* actor)
 		scene->engine->Get<nh::AudioSystem>()->PlayAudio("explosion");
 		nh::Event e;
 		e.name = "PlayerHit";
-		e.data = std::string("I'm dead");
 		scene->engine->Get<nh::EventSystem>()->Notify(e);
 	}
 }
