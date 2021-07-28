@@ -18,14 +18,13 @@ void Enemy::OnCollision(Actor* actor)
 {
 	if (dynamic_cast<Projectile*>(actor) && actor->tag == "Player")
 	{
-		destroy = true;
 		actor->destroy = true;
 
 		scene->engine->Get<nh::ParticleSystem>()->Create(transform.position, 200, 2.0f, nh::Color::white, 50.0f);
 		scene->engine->Get<nh::AudioSystem>()->PlayAudio("explosion");
-		nh::Event e;
-		e.name = "AddPoints";
-		e.data = 100;
-		scene->engine->Get<nh::EventSystem>()->Notify(e);
+		nh::Event e1{ "AddPoints", 100 * size };
+		nh::Event e2{ "EnemyHit", this };
+		scene->engine->Get<nh::EventSystem>()->Notify(e1);
+		scene->engine->Get<nh::EventSystem>()->Notify(e2);
 	}
 }

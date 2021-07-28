@@ -10,6 +10,7 @@ Player::Player(const nh::Transform& transform, std::shared_ptr<nh::Shape> shape,
 {
 	std::unique_ptr locator = std::make_unique<Actor>();
 	locator->transform.lPosition = { 5.0f, 0.0f };
+	locator->transform.lScale = 0.5f;
 	AddChild(std::move(locator));
 }
 

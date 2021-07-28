@@ -49,7 +49,7 @@ namespace nh
 
 	inline Vector2 Matrix33::GetScale() const
 	{
-		return { m[0][0], m[1][1] };
+		return { sqrt(m[0][0] * m[0][0] + m[1][0] * m[1][0]), sqrt(m[1][0] * m[1][0] + m[1][1] * m[1][1]) };
 	}
 
 	inline void Matrix33::Rotate(float a)

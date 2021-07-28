@@ -9,7 +9,9 @@ public:
 
 	void Update(float dt) override;
 
-	virtual void OnCollision(Actor* actor);
+	void OnCollision(Actor* actor) override;
+
+	int size{ 3 };
 
 private:
 	float fireTimer{ 0.0f };

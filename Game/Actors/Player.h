@@ -12,7 +12,7 @@ public:
 
 private:
 	float fireTimer{ 0.0f };
-	float fireRate{ 0.2f };
+	float fireRate{ 0.4f };
 	float turnSpeed{ 3.0f };
 	float speed{ 200.0f };
 };

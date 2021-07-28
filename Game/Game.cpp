@@ -17,6 +17,7 @@ void Game::Initialize()
 
 	engine->Get<nh::EventSystem>()->Subscribe("AddPoints", std::bind(&Game::OnAddPoints, this, std::placeholders::_1));
 	engine->Get<nh::EventSystem>()->Subscribe("PlayerHit", std::bind(&Game::OnPlayerHit, this, std::placeholders::_1));
+	engine->Get<nh::EventSystem>()->Subscribe("EnemyHit", std::bind(&Game::OnEnemyHit, this, std::placeholders::_1));
 }
 
 void Game::Shutdown()
@@ -103,7 +104,7 @@ void Game::UpdateStartLevel(float dt)
 	for (size_t i = 0; i < 10; i++)
 	{
 		scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { nh::RandomRange(-100.0f, 900.0f), nh::RandomRange(-100.0f, 700.0f) },
-			nh::RandomRange(0.0f, nh::TwoPi), 5.0f },
+			nh::RandomRange(0.0f, nh::TwoPi), 6.0f },
 			engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid1.txt"), nh::RandomRange(10.0f, 100.0f)));
 	}
 
@@ -112,8 +113,16 @@ void Game::UpdateStartLevel(float dt)
 
 void Game::UpdateGame(float dt)
 {
-	if (iFrameCounter > 0) { iFrameCounter -= dt; }
+	iFrameCounter -= dt;
 
+	if ((spawnerTimer -= dt) <= 0.0f)
+	{
+		spawnerTimer = 5.0f;
+
+		scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { nh::RandomRange(-100.0f, 900.0f), nh::RandomRange(-100.0f, 700.0f) },
+			nh::RandomRange(0.0f, nh::TwoPi), 6.0f },
+			engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid1.txt"), nh::RandomRange(10.0f, 100.0f)));
+	}
 }
 
 void Game::OnAddPoints(const nh::Event& e)
@@ -123,13 +132,37 @@ void Game::OnAddPoints(const nh::Event& e)
 
 void Game::OnPlayerHit(const nh::Event& e)
 {
-	if (iFrameCounter <= 0)
+	if (iFrameCounter <= 0.0f)
 	{
 		iFrameCounter = 0.5f;
 		if (--lives == 0)
 		{
 			state = eState::GameOver;
 			scene->GetActor<Player>()->destroy = true;
+		}
+	}
+}
+
+void Game::OnEnemyHit(const nh::Event& e)
+{
+	Enemy* enemy = dynamic_cast<Enemy*>(std::get<nh::Actor*>(e.data));
+	enemy->destroy = true;
+
+	enemy->size--;
+
+	if (enemy->size > 0)
+	{
+		nh::Transform t = enemy->transform;
+		t.rotation = nh::RandomRange(0.0f, nh::TwoPi);
+		t.scale = enemy->size * 2.0f;
+
+		for (int i = 0; i < 2; ++i)
+		{
+			std::unique_ptr newEnemy = std::make_unique<Enemy>(t, 
+				engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid1.txt"), nh::RandomRange(30.0f, 100.0f));
+			newEnemy->size = enemy->size;
+			scene->AddActor(std::move(newEnemy));
+			t.rotation = nh::RandomRange(0.0f, nh::TwoPi);
 		}
 	}
 }

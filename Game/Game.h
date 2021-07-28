@@ -27,6 +27,7 @@ private:
 	void UpdateGame(float dt);
 	void OnAddPoints(const nh::Event& e);
 	void OnPlayerHit(const nh::Event& e);
+	void OnEnemyHit(const nh::Event& e);
 
 public:
 	std::unique_ptr<nh::Scene> scene;
@@ -34,13 +35,14 @@ public:
 
 private:
 	eState state = eState::Title;
-	float stateTimer = 0.0f;
+	float stateTimer{ 0.0f };
 
 	void (Game::* stateFn)(float) = nullptr;
 
-	float iFrameCounter = 0.0f;
+	float iFrameCounter{ 0.0f };
+	float spawnerTimer{ 5.0f };
 
-	unsigned int score = 0;
-	unsigned char lives = 0;
+	unsigned int score{ 0 };
+	unsigned char lives{ 0 };
 };
 

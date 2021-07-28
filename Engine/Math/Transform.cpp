@@ -31,5 +31,6 @@ namespace nh
 
 		position = matrix.GetTranslation();
 		rotation = matrix.GetRotation();
+		scale = matrix.GetScale();
 	}
 }

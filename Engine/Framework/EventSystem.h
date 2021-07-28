@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Base\System.h"
+#include "Base\Actor.h"
 
 #include <string>
 #include <functional>
@@ -13,7 +14,7 @@ namespace nh
 	struct Event
 	{
 		std::string name;
-		std::variant<int, bool, float, std::string> data;
+		std::variant<int, bool, float, std::string, Actor*> data;
 	};
 
 	class EventSystem : public System
