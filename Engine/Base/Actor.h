@@ -14,8 +14,10 @@ namespace nh
 	class Actor : public Object
 	{
 	public:
-		Actor(const Transform& transform, std::shared_ptr<Shape> shape = {}) : transform{ transform }, shape{ shape } {}
 		Actor() {}
+		Actor(const Transform& transform, std::shared_ptr<Shape> shape = {}) : transform{ transform }, shape{ shape } {}
+
+		virtual void Initialize() {};
 
 		virtual void Update(float dt);
 		virtual void Draw(Core::Graphics& graphics);

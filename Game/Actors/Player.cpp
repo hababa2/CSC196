@@ -14,13 +14,22 @@ Player::Player(const nh::Transform& transform, std::shared_ptr<nh::Shape> shape,
 	AddChild(std::move(locator));
 }
 
+void Player::Initialize()
+{
+
+}
+
 void Player::Update(float dt)
 {
-	float thrust = 0;
 	transform.rotation += (Core::Input::IsPressed('D') - Core::Input::IsPressed('A')) * turnSpeed * dt;
-	thrust = (Core::Input::IsPressed('W') - Core::Input::IsPressed('S')) * speed;
+	float thrust = (Core::Input::IsPressed('W') - Core::Input::IsPressed('S')) * speed;
 
-	transform.position += nh::Vector2::Rotate(nh::Vector2::right, transform.rotation) * thrust * dt;
+	nh::Vector2 acceleration = nh::Vector2::Rotate(nh::Vector2::right, transform.rotation) * thrust;
+	velocity += acceleration * dt;
+	transform.position += velocity * dt;
+
+	velocity *= 0.975f;
+
 	transform.position.x = nh::Wrap(transform.position.x, 0.0f, 800.0f);
 	transform.position.y = nh::Wrap(transform.position.y, 0.0f, 600.0f);
 
@@ -36,15 +45,13 @@ void Player::Update(float dt)
 		scene->AddActor(std::move(p));
 	}
 
-	scene->engine->Get<nh::ParticleSystem>()->Create(transform.position, 3, 2.0f, nh::Color::red, 50.0f);
+	scene->engine->Get<nh::ParticleSystem>()->Create(transform.position, 3, 2.0f, { nh::Color::red }, 50.0f, nh::Pi + transform.rotation, nh::DegToRad(15.0f));
 }
 
 void Player::OnCollision(Actor* actor)
 {
-	if (dynamic_cast<Enemy*>(actor))
+	if (dynamic_cast<Enemy*>(actor) || (dynamic_cast<Projectile*>(actor) && actor->tag == "Enemy"))
 	{
-		scene->engine->Get<nh::ParticleSystem>()->Create(transform.position, 200, 2.0f, nh::Color::red, 50.0f);
-		scene->engine->Get<nh::AudioSystem>()->PlayAudio("explosion");
 		nh::Event e;
 		e.name = "PlayerHit";
 		scene->engine->Get<nh::EventSystem>()->Notify(e);

@@ -59,4 +59,25 @@ namespace nh
 			}
 		}
 	}
+
+	void ParticleSystem::Create(const Vector2& position, size_t count, float lifetime, const std::vector<Color>& colors, float speed, float angle, float angleRange)
+	{
+		auto particle = particles.begin();
+		for (size_t i = 0; i < count; i++)
+		{
+			particle = std::find_if(particle, particles.end(), Particle::IsNotActive);
+
+			if (particle != particles.end())
+			{
+				particle->isActive = true;
+				particle->lifetime = lifetime;
+				particle->position = position;
+				particle->prevPosition = position;
+				particle->color = colors[rand() % colors.size()];
+
+				particle->velocity = Vector2::Rotate(Vector2::right, angle + RandomRange(-angleRange, angleRange)) * (speed * Random());
+				++particle;
+			}
+		}
+	}
 }

@@ -41,8 +41,10 @@ private:
 
 	float iFrameCounter{ 0.0f };
 	float spawnerTimer{ 5.0f };
+	bool notSpawned{ false };
 
 	unsigned int score{ 0 };
+	unsigned int highScore{ 0 };
 	unsigned char lives{ 0 };
 };
 

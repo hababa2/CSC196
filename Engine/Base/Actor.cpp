@@ -20,6 +20,14 @@ namespace nh
 		{
 			shape->Draw(graphics, transform);
 		}
+
+		for (auto& c : children)
+		{
+			if (c->shape)
+			{
+				c->shape->Draw(graphics, c->transform);
+			}
+		}
 	}
 
 	void Actor::AddChild(std::unique_ptr<Actor> a)
