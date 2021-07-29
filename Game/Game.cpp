@@ -12,6 +12,7 @@ void Game::Initialize()
 	scene->engine = engine.get();
 
 	engine->Get<nh::AudioSystem>()->AddAudio("explosion", "explosion.wav");
+	engine->Get<nh::AudioSystem>()->AddAudio("shoot", "laser.wav");
 
 	state = eState::Title;
 
@@ -63,7 +64,7 @@ void Game::Draw(Core::Graphics& graphics)
 	{
 	case Game::eState::Title:
 		graphics.SetColor(nh::Color::blue);
-		graphics.DrawString(380, 300 + static_cast<int>(std::sin(stateTimer * 3.0f) * 4.0f), "MY GAME");
+		graphics.DrawString(380, 300 + static_cast<int>(std::sin(stateTimer * 3.0f) * 4.0f), "ASTEROIDS");
 		graphics.DrawString(340, 400, "PRESS SPACE TO START");
 		break;
 	case Game::eState::StartGame:
@@ -136,7 +137,7 @@ void Game::UpdateGame(float dt)
 		{
 			scene->AddActor(std::make_unique<Enemy>(nh::Transform{ { nh::RandomRange(-100.0f, 900.0f), nh::RandomRange(-100.0f, 700.0f) },
 				nh::RandomRange(0.0f, nh::TwoPi), 6.0f },
-				engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid" + std::to_string(nh::RandomRangeInt(0, 2)) + ".txt"), nh::RandomRange(10.0f, 100.0f), false));
+				engine->Get<nh::ResourceSystem>()->get<nh::Shape>("asteroid" + std::to_string(rand() % 3) + ".txt"), nh::RandomRange(10.0f, 100.0f), false));
 		}
 	}
 }

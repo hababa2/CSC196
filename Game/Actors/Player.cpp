@@ -37,8 +37,10 @@ void Player::Update(float dt)
 
 	if (((fireTimer -= dt) <= 0) && Core::Input::IsPressed(VK_SPACE))
 	{
+		scene->engine->Get<nh::AudioSystem>()->PlayAudio("shoot");
 		fireTimer = fireRate;
 		nh::Transform t = children[0]->transform;
+		t.scale = 0.5f;
 		std::unique_ptr<Projectile> p = std::make_unique<Projectile>(t,
 			scene->engine->Get<nh::ResourceSystem>()->get<nh::Shape>("player.txt"), 600.0f);
 		p->tag = "Player";

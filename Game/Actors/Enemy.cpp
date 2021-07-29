@@ -17,6 +17,7 @@ void Enemy::Update(float dt)
 
 		if ((fireTimer -= dt) <= 0)
 		{
+			scene->engine->Get<nh::AudioSystem>()->PlayAudio("shoot");
 			fireTimer = fireRate;
 			nh::Transform t = transform;
 			t.scale = 0.5f;
